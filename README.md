@@ -10,6 +10,7 @@ Project Execution Blueprint:
 3. Clear Metrics: Measure success with concrete plots—Average Reward over Episodes, Time to Convergence, and Performance vs. Heuristic Baselines.
 
 PROPOSAL FEEDBACK:
+
 Topic: Clear and reasonable. RL could help the agent adapt to changing traffic.
 
 Method: The state, action, and reward design make sense. Also consider how you will simplify the states, since too many combinations could make tabular Q-learning difficult. Consider using DQN directly if needed.
