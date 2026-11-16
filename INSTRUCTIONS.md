@@ -1,250 +1,212 @@
-## 3. Installing SUMO on macOS
+## 3. Installing and Configuring SUMO on macOS
 
-This section documents the SUMO installation process used on the reference Mac so other group members can reproduce the setup.
+This section describes the installation process for group members
+setting up the project on their Macs.
 
 ### 3.1 Install Homebrew
 
-Homebrew is the package manager used to install software on macOS.
+Homebrew is a package manager for macOS.
 
-Check whether Homebrew is installed:
+Check whether it is installed:
 
-```bash
+``` bash
 brew --version
 ```
 
-If it is not installed, install it using the official installation instructions:
-
-https://brew.sh/
-
-After installation, verify that the `brew` command works.
+If it is not installed, follow the official instructions at
+[brew.sh](https://brew.sh/).
 
 ### 3.2 Install SUMO
 
 Install SUMO using Homebrew:
 
-```bash
+``` bash
 brew install sumo
 ```
 
 Verify the installation:
 
-```bash
+``` bash
 sumo --version
+sumo-gui --version
 which sumo
+which sumo-gui
 ```
 
-On the reference Mac, the SUMO executable was located at:
+On the reference Mac:
 
-```text
-/opt/homebrew/bin/sumo
+-   SUMO version: **1.28.0**
+-   SUMO executable: `/opt/homebrew/bin/sumo`
+
+The executable location and version may differ on other Macs.
+
+### 3.3 Find the SUMO tools directory
+
+The reference Mac's SUMO tools directory was:
+
+``` text
+/opt/homebrew/lib/python3.14/site-packages/sumo
 ```
 
-The installed version was SUMO 1.28.0.
+This path is specific to the reference Mac. Do not assume it will be
+identical on every computer. Each teammate should locate their own SUMO
+installation and tools directory.
 
-**Note:** The exact executable location and version may differ across Macs.
+### 3.4 Configure SUMO environment variables
 
-### 3.3 Install XQuartz
+On the reference Mac, the following variables were used:
 
-XQuartz is required to run SUMO-GUI on macOS because SUMO-GUI uses the X11 windowing system.
+``` bash
+export SUMO_HOME="/opt/homebrew/lib/python3.14/site-packages/sumo"
+export PYTHONPATH="$SUMO_HOME/tools:$PYTHONPATH"
+```
 
-Download XQuartz from:
+These variables allow Python to locate SUMO's tools, including tools
+used by SUMO-RL.
 
-https://www.xquartz.org/
+Use the correct path for the local installation.
 
-Install it and open it:
+### 3.5 Make environment variables persistent (Zsh)
 
-```bash
+To avoid re-entering the variables in every new Terminal session, open
+the Zsh configuration file:
+
+``` bash
+nano ~/.zshrc
+```
+
+Add the appropriate `SUMO_HOME` and `PYTHONPATH` exports. For the
+reference Mac:
+
+``` bash
+export SUMO_HOME="/opt/homebrew/lib/python3.14/site-packages/sumo"
+export PYTHONPATH="$SUMO_HOME/tools:$PYTHONPATH"
+```
+
+Save the file, exit the editor, and reload the configuration:
+
+``` bash
+source ~/.zshrc
+```
+
+Verify the variables:
+
+``` bash
+echo "$SUMO_HOME"
+echo "$PYTHONPATH"
+```
+
+------------------------------------------------------------------------
+
+## 4. Installing and Configuring XQuartz for SUMO-GUI
+
+SUMO's graphical interface uses the X11 windowing system. On macOS,
+**XQuartz** provides the X11 display server needed to run SUMO-GUI.
+
+### 4.1 Install and start XQuartz
+
+Download and install XQuartz from
+[xquartz.org](https://www.xquartz.org/).
+
+Start it from the regular Mac Terminal:
+
+``` bash
 open -a XQuartz
 ```
 
-Wait for XQuartz to start before attempting to launch SUMO-GUI.
+Wait for XQuartz to start before launching SUMO-GUI.
 
-### 3.4 Configure the XQuartz display
+### 4.2 Configure the display
 
-In the regular Mac Terminal, run:
+In the regular Mac Terminal, set:
 
-```bash
+``` bash
 export DISPLAY=:0
 ```
 
 Verify:
 
-```bash
-echo $DISPLAY
+``` bash
+echo "$DISPLAY"
 ```
 
-Expected output:
+On the reference Mac, the expected value was:
 
-```text
+``` text
 :0
 ```
 
-This allows SUMO-GUI to connect to the XQuartz display server.
+This tells graphical applications where to find the XQuartz display
+server. It does **not** start XQuartz.
 
-**Important:** XQuartz must remain running while SUMO-GUI is open. Closing XQuartz shuts down the display server.
+### 4.3 Test the XQuartz display
 
-### 3.5 Configure SUMO environment variables
+Run:
 
-Locate the SUMO installation directory.
-
-On the reference Mac, it was:
-
-```text
-/opt/homebrew/lib/python3.14/site-packages/sumo
-```
-
-Configure the environment variables:
-
-```bash
-export SUMO_HOME="/opt/homebrew/lib/python3.14/site-packages/sumo"
-export PYTHONPATH="$SUMO_HOME/tools:$PYTHONPATH"
-```
-
-These variables allow Python and SUMO-RL to access SUMO's tools.
-
-**Important:** The path above is specific to the reference Mac. Other group members should locate their own SUMO installation before configuring these variables.
-
-### 3.6 Make environment variables persistent
-
-To avoid setting the variables every time a new Terminal window opens, add them to the Zsh configuration file:
-
-```bash
-nano ~/.zshrc
-```
-
-Add the appropriate environment variables:
-
-```bash
-export SUMO_HOME="/opt/homebrew/lib/python3.14/site-packages/sumo"
-export PYTHONPATH="$SUMO_HOME/tools:$PYTHONPATH"
-export DISPLAY=:0
-```
-
-Save and exit, then reload the configuration:
-
-```bash
-source ~/.zshrc
-```
-
-Check the variables:
-
-```bash
-echo $SUMO_HOME
-echo $PYTHONPATH
-echo $DISPLAY
-```
-
-**Note:** `DISPLAY=:0` assumes XQuartz is running and available at that display. If XQuartz is closed, graphical applications will still fail to connect.
-
-### 3.7 Verify SUMO and SUMO-GUI
-
-Check SUMO:
-
-```bash
-sumo --version
-```
-
-Check SUMO-GUI:
-
-```bash
-sumo-gui --version
-```
-
-Check the XQuartz display:
-
-```bash
+``` bash
 /opt/X11/bin/xterm
 ```
 
-If an xterm window opens, the XQuartz display connection is working.
+If an xterm window opens, the X11 display connection is working.
 
-Finally, launch the project simulation:
+### 4.4 Make DISPLAY persistent (optional)
 
-```bash
-cd ~/Desktop/github/CS175Project
+If desired, add the following to `~/.zshrc`:
 
-sumo-gui -c sumo/simulation.sumocfg
+``` bash
+export DISPLAY=:0
 ```
 
-### 3.8 Common installation issues
+Then reload the configuration:
 
-| Error | Suggested solution |
-|---|---|
-| `brew: command not found` | Install Homebrew and configure its PATH |
-| `sumo: command not found` | Verify SUMO installation and PATH |
-| `sumo-gui: command not found` | Verify SUMO installation |
-| `FXApp::openDisplay` | Start XQuartz and verify DISPLAY |
-| `No module named traci` | Check SUMO_HOME and PYTHONPATH |
-| Incorrect SUMO_HOME | Locate the actual SUMO installation directory |
-
-### Official Resources
-
-- Homebrew: https://brew.sh/
-- SUMO Documentation: https://sumo.dlr.de/docs/
-- SUMO Installation: https://sumo.dlr.de/docs/Installing/index.html
-- XQuartz: https://www.xquartz.org/
-## 3. SUMO Installation and Configuration
-
-SUMO was installed on macOS and its executable was verified.
-
-Check the installation:
-
-```bash
-which sumo
+``` bash
+source ~/.zshrc
 ```
 
-On the working development machine, the output was:
+This setting assumes XQuartz is running and available at `:0`. If
+XQuartz is closed, graphical applications cannot connect even if
+`DISPLAY` is set.
 
-```text
-/opt/homebrew/bin/sumo
+### 4.5 Important XQuartz behavior
+
+Keep XQuartz running while using SUMO-GUI. Closing XQuartz shuts down
+the display server.
+
+If SUMO-GUI displays:
+
+``` text
+FXApp::openDisplay: unable to open display :0
 ```
 
-Check the installed version:
+check that:
 
-```bash
-sumo --version
-```
+1.  XQuartz is running.
+2.  `echo "$DISPLAY"` reports the display configured for XQuartz (on the
+    reference Mac, `:0`).
+3.  `/opt/X11/bin/xterm` can open.
 
-The installed version is SUMO 1.28.0.
+Headless SUMO simulations do not require XQuartz.
 
-### SUMO_HOME configuration
+------------------------------------------------------------------------
 
-The SUMO tools directory was located at:
+## 5. Creating the SUMO Traffic Network
 
-```text
-/opt/homebrew/lib/python3.14/site-packages/sumo
-```
+We created a four-way intersection with four incoming roads and four
+outgoing roads.
 
-The following environment variables were configured:
-
-```bash
-export SUMO_HOME="/opt/homebrew/lib/python3.14/site-packages/sumo"
-export PYTHONPATH="$SUMO_HOME/tools:$PYTHONPATH"
-```
-
-These variables allow Python to locate SUMO's tools and libraries.
-
-**Important:** Installation paths can differ between group members. Each person should verify their own SUMO installation before copying these paths.
-
----
-
-## 4. Creating the SUMO Traffic Network
-
-We created a four-way intersection with four incoming roads and four outgoing roads.
-
-### 4.1 Nodes
+### 5.1 Nodes
 
 The file `sumo/nodes.nod.xml` defines five nodes:
 
-- `C`: Central intersection with a traffic light.
-- `N`: Northern node.
-- `S`: Southern node.
-- `E`: Eastern node.
-- `W`: Western node.
+-   `C`: central intersection with a traffic light
+-   `N`: northern node
+-   `S`: southern node
+-   `E`: eastern node
+-   `W`: western node
 
-Node configuration:
+The node configuration is:
 
-```xml
+``` xml
 <nodes>
     <node id="C" x="0" y="0" type="traffic_light"/>
     <node id="N" x="0" y="200" type="priority"/>
@@ -254,15 +216,14 @@ Node configuration:
 </nodes>
 ```
 
-### 4.2 Edges
+### 5.2 Edges
 
-The file `sumo/edges.edg.xml` defines eight edges connecting the outer nodes to the central intersection.
+The file `sumo/edges.edg.xml` defines eight edges connecting the outer
+nodes to the central intersection.
 
-Each edge has:
-- One lane.
-- A speed limit of 13.89 m/s.
+Each edge has one lane and a speed limit of 13.89 m/s.
 
-```xml
+``` xml
 <edges>
     <edge id="N_in" from="N" to="C" numLanes="1" speed="13.89"/>
     <edge id="S_out" from="C" to="S" numLanes="1" speed="13.89"/>
@@ -275,39 +236,35 @@ Each edge has:
 </edges>
 ```
 
-### 4.3 Generating the network
+### 5.3 Generate the network
 
-We used `netconvert` to generate the network file:
+From the project root, run:
 
-```bash
+``` bash
 netconvert \
     --node-files sumo/nodes.nod.xml \
     --edge-files sumo/edges.edg.xml \
     --output-file sumo/intersection.net.xml
 ```
 
-This successfully generated:
+This generates `sumo/intersection.net.xml`.
 
-```text
-sumo/intersection.net.xml
-```
+------------------------------------------------------------------------
 
----
-
-## 5. Traffic Routes and Vehicle Flows
+## 6. Traffic Routes and Vehicle Flows
 
 The file `sumo/routes.rou.xml` defines four traffic routes:
 
-| Route ID | Direction |
-|---|---|
-| west_east | West → East |
-| east_west | East → West |
-| north_south | North → South |
-| south_north | South → North |
+  Route ID        Direction
+  --------------- ---------------
+  `west_east`     West → East
+  `east_west`     East → West
+  `north_south`   North → South
+  `south_north`   South → North
 
-The current route configuration:
+The current route configuration is:
 
-```xml
+``` xml
 <routes>
     <vType id="car" accel="2.6" decel="4.5" sigma="0.5" length="5" maxSpeed="13.89"/>
 
@@ -323,24 +280,24 @@ The current route configuration:
 </routes>
 ```
 
-### Vehicle flow settings
+Each direction generates vehicles every five seconds during its
+configured flow period.
 
-| Setting | Value |
-|---|---|
-| Simulation beginning | 0 seconds |
-| Vehicle generation ending | 600 seconds |
-| Vehicle generation period | 5 seconds |
-| Number of directions | 4 |
+  Setting                Value
+  ---------------------- -------------
+  Flow beginning         0 seconds
+  Flow ending            600 seconds
+  Generation period      5 seconds
+  Number of directions   4
 
-Each direction generates vehicles every five seconds during its configured flow period.
+------------------------------------------------------------------------
 
----
+## 7. Simulation Configuration and Testing
 
-## 6. Simulation Configuration
+The file `sumo/simulation.sumocfg` contains the simulation
+configuration:
 
-The file `sumo/simulation.sumocfg` contains the simulation configuration:
-
-```xml
+``` xml
 <configuration>
     <input>
         <net-file value="intersection.net.xml"/>
@@ -356,118 +313,67 @@ The file `sumo/simulation.sumocfg` contains the simulation configuration:
 ```
 
 The simulation uses:
-- Network file: `intersection.net.xml`
-- Route file: `routes.rou.xml`
-- Duration: 600 seconds
-- Simulation step length: 1 second
 
-### Testing the simulation
+-   Network file: `intersection.net.xml`
+-   Route file: `routes.rou.xml`
+-   Duration: 600 seconds
+-   Simulation step length: 1 second
+
+### Run the headless simulation
 
 From the project root:
 
-```bash
+``` bash
 sumo -c sumo/simulation.sumocfg
 ```
 
-The simulation successfully completed all 600 seconds.
+The simulation successfully completed all 600 seconds on the reference
+Mac. The output reported approximately 480 total vehicles generated.
 
-The output reported approximately 480 total vehicles generated.
+### Run the simulation with SUMO-GUI
 
----
+First, start XQuartz and configure `DISPLAY` if needed:
 
-## 7. SUMO-GUI Setup on macOS
-
-SUMO-GUI initially failed to launch because macOS did not have an accessible X11 display.
-
-We resolved this by installing **XQuartz**, which provides an X11 display server for macOS.
-
-### 7.1 Starting XQuartz
-
-From the regular Mac Terminal:
-
-```bash
+``` bash
 open -a XQuartz
-```
-
-Wait for XQuartz to start before launching SUMO-GUI.
-
-### 7.2 Configuring DISPLAY
-
-The following command was used to point graphical applications to the XQuartz display:
-
-```bash
 export DISPLAY=:0
 ```
 
-Verify the setting:
+Then run:
 
-```bash
-echo $DISPLAY
-```
-
-Expected output:
-
-```text
-:0
-```
-
-### 7.3 Launching SUMO-GUI
-
-From the project root:
-
-```bash
+``` bash
 cd ~/Desktop/github/CS175Project
-
 sumo-gui -c sumo/simulation.sumocfg
 ```
 
-SUMO-GUI successfully launched and displayed:
-- The four-way intersection.
-- Vehicles traveling through the network.
-- Traffic lights.
-- The simulation visualization.
+------------------------------------------------------------------------
 
-### 7.4 Important XQuartz troubleshooting
+## 8. SUMO-GUI Visualization Settings
 
-If SUMO-GUI produces:
+The SUMO-GUI appearance was customized, including the background and
+visualization colors. The customized appearance was successfully saved.
 
-```text
-FXApp::openDisplay: unable to open display :0
-```
+The visualization settings are separate from the main simulation
+settings:
 
-Check the following:
+-   `simulation.sumocfg` configures the network, routes, and simulation
+    timing.
+-   GUI view settings control how the simulation is displayed.
 
-1. Make sure XQuartz is running.
-2. Make sure `DISPLAY` is set to `:0`.
-3. Try opening an X11 application such as:
+The GUI colors are considered complete on the reference Mac. The saved
+GUI configuration file is present in the project structure as
+`sumo/gui_settings.sumocfg`.
 
-```bash
-/opt/X11/bin/xterm
-```
+------------------------------------------------------------------------
 
-**Important:** Setting `DISPLAY=:0` does not start XQuartz. It only tells applications where to find the display server.
+## 9. SUMO-RL and Gymnasium Integration
 
-Closing XQuartz shuts down the display server, so SUMO-GUI will no longer be able to connect.
+After configuring SUMO, we successfully connected it to SUMO-RL and
+Gymnasium.
 
-Headless SUMO simulations do not require XQuartz.
+The initial integration test was implemented in `main.py`:
 
-### 7.5 Saving GUI visualization settings
-
-The SUMO-GUI appearance was customized, including background and visualization colors.
-
-The customized appearance was successfully configured and saved.
-
-The GUI visualization settings are separate from the main simulation configuration. The simulation configuration controls the network, routes, and timing, while visualization settings control how the simulation looks.
-
----
-
-## 8. SUMO-RL and Gymnasium Integration
-
-After configuring SUMO, we successfully connected it to SUMO-RL and Gymnasium.
-
-The initial integration test was implemented in `main.py`.
-
-```python
+``` python
 import gymnasium as gym
 import sumo_rl
 
@@ -502,48 +408,50 @@ env.close()
 print("Simulation completed!")
 ```
 
-### 8.1 Test results
+### 9.1 Test results
 
 The environment successfully initialized and ran.
 
-| Property | Result |
-|---|---|
-| Environment ID | `sumo-rl-v0` |
-| Observation shape | `(11,)` |
-| Observation space | `Box(0.0, 1.0, (11,), float32)` |
-| Action space | `Discrete(2)` |
-| Simulation duration | 600 seconds |
-| Test steps | 100 |
+  Property                         Result
+  -------------------------------- ---------------------------------
+  Environment ID                   `sumo-rl-v0`
+  Observation shape                `(11,)`
+  Observation space                `Box(0.0, 1.0, (11,), float32)`
+  Action space                     `Discrete(2)`
+  Simulation duration configured   600 seconds
+  Test steps                       100
 
-Initial observation:
+The initial observation was:
 
-```python
+``` python
 [1. 0. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
 ```
 
 The environment completed the random-action test successfully.
 
-**Important:** This was a smoke test, not actual Q-learning training. The random actions were only used to verify that the environment works.
+**Note:** This was a smoke test to verify that SUMO-RL and Gymnasium
+work together. It was not Q-learning training; the actions were sampled
+randomly.
 
----
+------------------------------------------------------------------------
 
-## 9. Environment Inspection — Next Technical Step
+## 10. Inspecting the SUMO-RL Environment
 
-Before implementing Q-learning, we need to understand exactly what information SUMO-RL provides to the agent.
+Before implementing Q-learning, we need to understand exactly what
+information SUMO-RL provides to the agent.
 
-We need to inspect:
-- The observation vector.
-- The observation space.
-- The available traffic signal actions.
-- The number of green phases.
-- The incoming lanes.
-- How the traffic signal changes between phases.
+The inspection should identify:
 
-An inspection script will be used to retrieve this information.
+-   The observation vector and its shape
+-   The observation space
+-   The available traffic signal actions
+-   The number of green phases
+-   The incoming lanes
+-   The available green-phase states
 
-Suggested script: `inspect_env.py`
+The following inspection script was proposed as `inspect_env.py`:
 
-```python
+``` python
 import gymnasium as gym
 import sumo_rl
 
@@ -589,27 +497,27 @@ env.close()
 
 Run it from the project root:
 
-```bash
+``` bash
 python inspect_env.py
 ```
 
-The output will help determine the state representation and Q-table design.
+The output will help determine the state representation and Q-table
+design. We should not assume what each observation index represents
+until the environment has been inspected.
 
-We should not assume what each observation index represents until we inspect the actual environment.
+------------------------------------------------------------------------
 
----
+## 11. Group Setup and Reproducibility
 
-## 10. Group Setup and Reproducibility
+All group members are using macOS. The reference Mac is the working
+setup that the rest of the team can compare against.
 
-All group members are using macOS.
+### 11.1 Diagnostic commands
 
-Since the project works on one machine, we will use that machine as the reference environment and standardize the setup for everyone else.
+Every group member should run these commands in their regular Mac
+Terminal:
 
-### 10.1 Diagnostic commands
-
-Every group member should run these commands in their regular Mac Terminal:
-
-```bash
+``` bash
 python3 --version
 which python3
 
@@ -620,159 +528,201 @@ python3 -m pip show gymnasium
 python3 -m pip show sumo-rl
 ```
 
-These commands identify:
-- Python version.
-- Python executable location.
-- SUMO version.
-- SUMO executable location.
-- Installed Gymnasium version.
-- Installed SUMO-RL version.
+These commands report:
 
-### 10.2 Check environment variables
+-   Python version and executable location
+-   SUMO version and executable location
+-   Installed Gymnasium version
+-   Installed SUMO-RL version
+
+### 11.2 Check environment variables
 
 Run:
 
-```bash
-echo $SUMO_HOME
-echo $PYTHONPATH
-echo $DISPLAY
+``` bash
+echo "$SUMO_HOME"
+echo "$PYTHONPATH"
+echo "$DISPLAY"
 ```
 
-The working development machine currently uses:
+The reference Mac currently uses:
 
-```bash
+``` bash
 export SUMO_HOME="/opt/homebrew/lib/python3.14/site-packages/sumo"
 export PYTHONPATH="$SUMO_HOME/tools:$PYTHONPATH"
 export DISPLAY=:0
 ```
 
-These values may differ depending on how SUMO was installed.
+These values may differ depending on how SUMO was installed. Teammates
+should verify their own installation paths rather than copying the
+reference paths blindly.
 
-Do not blindly copy these paths without checking your own installation.
+### 11.3 Common setup problems
 
-### 10.3 Common setup problems
+  -----------------------------------------------------------------------
+  Error or problem                    Possible cause / first check
+  ----------------------------------- -----------------------------------
+  `brew: command not found`           Homebrew is not installed or its
+                                      PATH is not configured
 
-| Problem | Possible cause |
-|---|---|
-| `sumo: command not found` | SUMO is not installed or not in PATH |
-| `sumo-gui` cannot open display | XQuartz is not running or DISPLAY is incorrect |
-| `No module named gymnasium` | Gymnasium is not installed in the active Python environment |
-| `No module named sumo_rl` | SUMO-RL is not installed in the active Python environment |
-| SUMO tools cannot be found | SUMO_HOME or PYTHONPATH is incorrect |
-| Network file not found | Incorrect working directory or file path |
-| Invalid XML configuration | Incorrect XML syntax or configuration |
+  `sumo: command not found`           SUMO is not installed or its
+                                      executable is not in PATH
 
-### 10.4 Standardization goals
+  `sumo-gui: command not found`       Check the SUMO installation and
+                                      PATH
 
-To make the project reproducible across all group members, we should eventually maintain:
+  `FXApp::openDisplay`                XQuartz is not running or `DISPLAY`
+                                      is incorrect
 
-- A complete `requirements.txt`.
-- A consistent Python environment.
-- A step-by-step macOS installation guide.
-- A SUMO installation verification script.
-- A SUMO-RL integration test.
+  `No module named gymnasium`         Gymnasium is missing from the
+                                      active Python environment
 
-We should compare everyone's diagnostic outputs before deciding on exact dependency versions.
+  `No module named sumo_rl`           SUMO-RL is missing from the active
+                                      Python environment
 
----
+  `No module named traci`             Check `SUMO_HOME`, `PYTHONPATH`,
+                                      and the active Python environment
 
-## 11. Current Project Status
+  SUMO tools cannot be found          Check `SUMO_HOME` and `PYTHONPATH`
+
+  Network file not found              Check the working directory and
+                                      file paths
+
+  Invalid XML configuration           Check XML syntax and configuration
+                                      file contents
+  -----------------------------------------------------------------------
+
+### 11.4 Standardization goals
+
+To make the project reproducible across all group members, the team
+should maintain:
+
+-   A complete and tested `requirements.txt`
+-   A consistent Python environment and package versions
+-   A step-by-step macOS installation guide
+-   A SUMO installation verification process
+-   A SUMO-RL integration test
+
+Compare everyone's diagnostic outputs before deciding which exact
+dependency versions to standardize.
+
+------------------------------------------------------------------------
+
+## 12. Current Project Status
 
 ### Completed
 
-- [x] Installed SUMO.
-- [x] Verified SUMO installation.
-- [x] Configured SUMO_HOME and PYTHONPATH.
-- [x] Created the four-way intersection.
-- [x] Generated the SUMO network using `netconvert`.
-- [x] Created four traffic routes.
-- [x] Configured vehicle flows.
-- [x] Configured the 600-second simulation.
-- [x] Successfully ran the headless SUMO simulation.
-- [x] Installed and tested SUMO-RL.
-- [x] Integrated SUMO-RL with Gymnasium.
-- [x] Verified the observation and action spaces exist.
-- [x] Successfully ran random actions through the environment.
-- [x] Installed XQuartz.
-- [x] Configured XQuartz to work with SUMO-GUI.
-- [x] Successfully launched SUMO-GUI.
-- [x] Customized and saved SUMO-GUI visualization colors.
+-   [x] Installed SUMO on the reference Mac.
+-   [x] Verified the SUMO installation.
+-   [x] Configured `SUMO_HOME` and `PYTHONPATH`.
+-   [x] Created the four-way intersection.
+-   [x] Generated the SUMO network using `netconvert`.
+-   [x] Created four traffic routes.
+-   [x] Configured vehicle flows.
+-   [x] Configured the 600-second simulation.
+-   [x] Successfully ran the headless SUMO simulation.
+-   [x] Installed and tested SUMO-RL.
+-   [x] Integrated SUMO-RL with Gymnasium.
+-   [x] Verified that the observation and action spaces are available.
+-   [x] Successfully ran random actions through the environment.
+-   [x] Installed XQuartz.
+-   [x] Configured XQuartz to work with SUMO-GUI.
+-   [x] Successfully launched SUMO-GUI.
+-   [x] Customized and saved SUMO-GUI visualization colors.
 
 ### In Progress
 
-- [ ] Standardize the setup across all group members.
-- [ ] Collect diagnostic outputs from teammates.
-- [ ] Inspect the SUMO-RL observation and action details.
-- [ ] Finalize the Q-learning state representation.
+-   [ ] Standardize the setup across all group members.
+-   [ ] Collect diagnostic outputs from teammates.
+-   [ ] Inspect the SUMO-RL observation and action details.
+-   [ ] Finalize the Q-learning state representation.
 
 ### Upcoming Tasks
 
-1. Finish environment inspection.
-2. Design the Q-learning state representation.
-3. Implement the Q-learning agent in `agent/q_learning.py`.
-4. Implement the training loop in `training/train.py`.
-5. Implement a fixed-time traffic signal controller in `controllers/fixed_time.py`.
-6. Develop evaluation metrics in `evaluation/metrics.py`.
-7. Compare the Q-learning agent against the fixed-time baseline in `evaluation/compare.py`.
-8. Save training results in `results/`.
-9. Analyze and document the results.
+1.  Finish inspecting the SUMO-RL environment.
+2.  Design the Q-learning state representation.
+3.  Implement the Q-learning agent in `agent/q_learning.py`.
+4.  Implement the training loop in `training/train.py`.
+5.  Implement a fixed-time traffic signal controller in
+    `controllers/fixed_time.py`.
+6.  Develop evaluation metrics in `evaluation/metrics.py`.
+7.  Compare the Q-learning agent against the fixed-time baseline in
+    `evaluation/compare.py`.
+8.  Save training results in `results/`.
+9.  Analyze and document the results.
 
----
+------------------------------------------------------------------------
 
-## 12. Running the Project
+## 13. Quick Reference: Running the Project
 
-All commands below should be run from the project root:
+Run commands from the project root:
 
-```bash
+``` bash
 cd ~/Desktop/github/CS175Project
 ```
 
 ### Run headless SUMO
 
-```bash
+``` bash
 sumo -c sumo/simulation.sumocfg
 ```
 
 ### Run SUMO-GUI
 
-Make sure XQuartz is running first:
+Make sure XQuartz is running:
 
-```bash
+``` bash
 open -a XQuartz
+export DISPLAY=:0
 ```
 
 Then:
 
-```bash
-export DISPLAY=:0
-
+``` bash
 sumo-gui -c sumo/simulation.sumocfg
 ```
 
 ### Run the SUMO-RL integration test
 
-```bash
+``` bash
 python main.py
 ```
 
 ### Run the environment inspection script
 
-Once created:
+Once `inspect_env.py` has been created:
 
-```bash
+``` bash
 python inspect_env.py
 ```
 
----
+------------------------------------------------------------------------
 
-## 13. Current Milestone
+## 14. Current Milestone and Next Steps
 
-**SUMO installation, traffic network creation, SUMO-RL integration, and GUI configuration are complete on the reference Mac.**
+**Completed on the reference Mac:** SUMO installation, traffic network
+creation, SUMO-RL integration, XQuartz configuration, and SUMO-GUI
+visualization customization.
 
 The immediate priorities are:
 
-1. Help all group members get the project running on their Macs.
-2. Inspect the SUMO-RL environment.
-3. Design and implement the tabular Q-learning agent.
+1.  Help all group members get the project running on their Macs.
+2.  Inspect the SUMO-RL environment and understand its observations and
+    actions.
+3.  Design and implement the tabular Q-learning agent.
 
-The next major development milestone is a working Q-learning agent that can control the intersection's traffic signals and be evaluated against a fixed-time controller.
+The next major development milestone is a working Q-learning agent that
+controls the intersection's traffic signals and can be evaluated against
+a fixed-time controller.
+
+------------------------------------------------------------------------
+
+## Official Resources
+
+-   [Homebrew](https://brew.sh/)
+-   [SUMO Documentation](https://sumo.dlr.de/docs/)
+-   [SUMO Installation
+    Documentation](https://sumo.dlr.de/docs/Installing/index.html)
+-   [XQuartz](https://www.xquartz.org/)
+-   [Gymnasium Documentation](https://gymnasium.farama.org/)
+-   [SUMO-RL Repository](https://github.com/LucasAlegre/sumo-rl)
