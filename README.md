@@ -1,15 +1,15 @@
 # Smart Traffic Control System
 
 ## 1. Project Overview
- The Concept: Control the light phases (Green/Red timing) for a busy 4-way intersection based on live queue lengths in each lane.
- Why it’s manageable:
- You can use lightweight simulators like SUMO (Simulation of Urban MObility) or build a simple queuing system in Python.
- The goal is clear: maximize throughput and minimize vehicle delay.
- Baseline to beat: Fixed-timer traffic lights (e.g., green for 30 seconds every cycle).
-Project Execution Blueprint: 
-1. Use Gymnasium & Stable-Baselines3: Don't write every algorithm from scratch unless required. Use SB3's pre-implemented algorithms (PPO, DQN, A2C) to spend more time on environment tuning, reward shaping, and analysis.
-2. Focus on Reward Shaping: For your report, a great section to write is comparing how different reward structures affect learning (e.g., penalizing time vs. penalizing collisions).
-3. Clear Metrics: Measure success with concrete plots—Average Reward over Episodes, Time to Convergence, and Performance vs. Heuristic Baselines.
+This project aims to develop an intelligent traffic signal control system that adapts to real-time traffic conditions at a busy four-way intersection. Rather than relying on fixed signal schedules, the system will dynamically adjust traffic light phases based on vehicle queue lengths and congestion across the intersection's incoming lanes.
+
+The primary objective is to improve traffic flow by maximizing vehicle throughput while minimizing average vehicle waiting time and overall congestion. The system will learn to make traffic signal decisions that respond to changing traffic demand, allowing it to allocate green-light time where it is needed most.
+
+To evaluate its effectiveness, the intelligent controller will be compared against a traditional fixed-time traffic signal system, which operates on a predetermined schedule regardless of current traffic conditions. This baseline will help determine whether adaptive control can produce measurable improvements in intersection performance.
+
+The project will also explore how different reward structures influence the controller's learning and decision-making. By examining the effects of different approaches to rewarding efficient traffic flow and penalizing delays or undesirable outcomes, we aim to better understand how learning objectives affect overall performance.
+
+Performance will be evaluated using metrics such as average vehicle waiting time, traffic throughput, congestion levels, and learning progress over time. Results will be presented through visualizations and comparisons with the fixed-time baseline to assess the effectiveness, consistency, and potential benefits of adaptive traffic signal control.
 
 ### Technologies
 
