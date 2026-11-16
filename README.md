@@ -66,3 +66,6 @@ Topic: Clear and reasonable. RL could help the agent adapt to changing traffic.
 Method: The state, action, and reward design make sense. Also consider how you will simplify the states, since too many combinations could make tabular Q-learning difficult. Consider using DQN directly if needed.
 
 Evaluation: Clear metrics and baselines, with tests under different traffic conditions.
+
+
+### For Information regarding setup please refer to INSTRUCTIONS.md
