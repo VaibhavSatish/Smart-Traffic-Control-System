@@ -68,4 +68,4 @@ Method: The state, action, and reward design make sense. Also consider how you w
 Evaluation: Clear metrics and baselines, with tests under different traffic conditions.
 
 
-### For Information regarding setup please refer to INSTRUCTIONS.md
+### For Information regarding setup please refer to [INSTRUCTIONS.md](https://github.com/VaibhavSatish/Smart-Traffic-Control-System/blob/main/INSTRUCTIONS.md)
