@@ -368,6 +368,41 @@ GUI configuration file is present in the project structure as
 
 ## 9. SUMO-RL and Gymnasium Integration
 
+### 9.1 Install SUMO-RL
+
+Install SUMO-RL with pip:
+
+```bash
+pip3 install sumo-rl
+```
+
+On the reference Mac, the regular installation command did not work
+because the Homebrew-managed Python environment blocked package
+installation. The workaround used was:
+
+```bash
+pip3 install sumo-rl --break-system-packages
+```
+
+The `--break-system-packages` flag bypasses Python's externally-managed
+environment protection (PEP 668). This is a workaround, not the preferred
+approach for every setup. A Python virtual environment is safer because
+it keeps project dependencies separate from the system/Homebrew Python
+installation.
+
+After installation, verify that the package is available to the Python
+interpreter you plan to use:
+
+```bash
+python3 -m pip show sumo-rl
+python3 -c "import sumo_rl; print('SUMO-RL imported successfully!')"
+```
+
+**Important:** Installing `sumo-rl` and configuring SUMO are separate
+steps. If Python reports that `SUMO_HOME` is not set, configure
+`SUMO_HOME` and `PYTHONPATH` as described in Section 3. The pip flag
+does not fix SUMO environment-variable errors.
+
 After configuring SUMO, we successfully connected it to SUMO-RL and
 Gymnasium.
 
@@ -408,7 +443,7 @@ env.close()
 print("Simulation completed!")
 ```
 
-### 9.1 Test results
+### 9.2 Test results
 
 The environment successfully initialized and ran.
 
