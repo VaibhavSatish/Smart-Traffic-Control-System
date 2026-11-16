@@ -1,4 +1,188 @@
+## 3. Installing SUMO on macOS
 
+This section documents the SUMO installation process used on the reference Mac so other group members can reproduce the setup.
+
+### 3.1 Install Homebrew
+
+Homebrew is the package manager used to install software on macOS.
+
+Check whether Homebrew is installed:
+
+```bash
+brew --version
+```
+
+If it is not installed, install it using the official installation instructions:
+
+https://brew.sh/
+
+After installation, verify that the `brew` command works.
+
+### 3.2 Install SUMO
+
+Install SUMO using Homebrew:
+
+```bash
+brew install sumo
+```
+
+Verify the installation:
+
+```bash
+sumo --version
+which sumo
+```
+
+On the reference Mac, the SUMO executable was located at:
+
+```text
+/opt/homebrew/bin/sumo
+```
+
+The installed version was SUMO 1.28.0.
+
+**Note:** The exact executable location and version may differ across Macs.
+
+### 3.3 Install XQuartz
+
+XQuartz is required to run SUMO-GUI on macOS because SUMO-GUI uses the X11 windowing system.
+
+Download XQuartz from:
+
+https://www.xquartz.org/
+
+Install it and open it:
+
+```bash
+open -a XQuartz
+```
+
+Wait for XQuartz to start before attempting to launch SUMO-GUI.
+
+### 3.4 Configure the XQuartz display
+
+In the regular Mac Terminal, run:
+
+```bash
+export DISPLAY=:0
+```
+
+Verify:
+
+```bash
+echo $DISPLAY
+```
+
+Expected output:
+
+```text
+:0
+```
+
+This allows SUMO-GUI to connect to the XQuartz display server.
+
+**Important:** XQuartz must remain running while SUMO-GUI is open. Closing XQuartz shuts down the display server.
+
+### 3.5 Configure SUMO environment variables
+
+Locate the SUMO installation directory.
+
+On the reference Mac, it was:
+
+```text
+/opt/homebrew/lib/python3.14/site-packages/sumo
+```
+
+Configure the environment variables:
+
+```bash
+export SUMO_HOME="/opt/homebrew/lib/python3.14/site-packages/sumo"
+export PYTHONPATH="$SUMO_HOME/tools:$PYTHONPATH"
+```
+
+These variables allow Python and SUMO-RL to access SUMO's tools.
+
+**Important:** The path above is specific to the reference Mac. Other group members should locate their own SUMO installation before configuring these variables.
+
+### 3.6 Make environment variables persistent
+
+To avoid setting the variables every time a new Terminal window opens, add them to the Zsh configuration file:
+
+```bash
+nano ~/.zshrc
+```
+
+Add the appropriate environment variables:
+
+```bash
+export SUMO_HOME="/opt/homebrew/lib/python3.14/site-packages/sumo"
+export PYTHONPATH="$SUMO_HOME/tools:$PYTHONPATH"
+export DISPLAY=:0
+```
+
+Save and exit, then reload the configuration:
+
+```bash
+source ~/.zshrc
+```
+
+Check the variables:
+
+```bash
+echo $SUMO_HOME
+echo $PYTHONPATH
+echo $DISPLAY
+```
+
+**Note:** `DISPLAY=:0` assumes XQuartz is running and available at that display. If XQuartz is closed, graphical applications will still fail to connect.
+
+### 3.7 Verify SUMO and SUMO-GUI
+
+Check SUMO:
+
+```bash
+sumo --version
+```
+
+Check SUMO-GUI:
+
+```bash
+sumo-gui --version
+```
+
+Check the XQuartz display:
+
+```bash
+/opt/X11/bin/xterm
+```
+
+If an xterm window opens, the XQuartz display connection is working.
+
+Finally, launch the project simulation:
+
+```bash
+cd ~/Desktop/github/CS175Project
+
+sumo-gui -c sumo/simulation.sumocfg
+```
+
+### 3.8 Common installation issues
+
+| Error | Suggested solution |
+|---|---|
+| `brew: command not found` | Install Homebrew and configure its PATH |
+| `sumo: command not found` | Verify SUMO installation and PATH |
+| `sumo-gui: command not found` | Verify SUMO installation |
+| `FXApp::openDisplay` | Start XQuartz and verify DISPLAY |
+| `No module named traci` | Check SUMO_HOME and PYTHONPATH |
+| Incorrect SUMO_HOME | Locate the actual SUMO installation directory |
+
+### Official Resources
+
+- Homebrew: https://brew.sh/
+- SUMO Documentation: https://sumo.dlr.de/docs/
+- SUMO Installation: https://sumo.dlr.de/docs/Installing/index.html
+- XQuartz: https://www.xquartz.org/
 ## 3. SUMO Installation and Configuration
 
 SUMO was installed on macOS and its executable was verified.
