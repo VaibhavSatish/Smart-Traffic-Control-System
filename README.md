@@ -22,8 +22,6 @@ Project Execution Blueprint:
 | Gymnasium | RL environment API |
 | XQuartz | X11 display server for macOS |
 
-All group members are currently using macOS.
-
 ---
 
 ## 2. Project Structure
