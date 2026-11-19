@@ -1,7 +1,7 @@
 
 import gymnasium as gym
 import sumo_rl
-
+from agent.q_learning import get_state
 env = gym.make(
     "sumo-rl-v0",
     net_file="sumo/intersection.net.xml",
@@ -36,5 +36,8 @@ for step in range(20):
 
     if terminated or truncated:
         break
+
+    state = get_state(obs)
+    print("Discrete State: ", state)
 
 env.close()
