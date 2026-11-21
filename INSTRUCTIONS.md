@@ -1,3 +1,10 @@
+## 2. Installing dependencies
+```bash
+pip install -r requirements.txt
+OR
+pip3 install -r requirements.txt
+```
+
 ## 3. Installing and Configuring SUMO on macOS
 
 This section describes the installation process for group members
@@ -730,25 +737,6 @@ Once `inspect_env.py` has been created:
 ``` bash
 python inspect_env.py
 ```
-
-------------------------------------------------------------------------
-
-## 14. Current Milestone and Next Steps
-
-**Completed on the reference Mac:** SUMO installation, traffic network
-creation, SUMO-RL integration, XQuartz configuration, and SUMO-GUI
-visualization customization.
-
-The immediate priorities are:
-
-1.  Help all group members get the project running on their Macs.
-2.  Inspect the SUMO-RL environment and understand its observations and
-    actions.
-3.  Design and implement the tabular Q-learning agent.
-
-The next major development milestone is a working Q-learning agent that
-controls the intersection's traffic signals and can be evaluated against
-a fixed-time controller.
 
 ------------------------------------------------------------------------
 
