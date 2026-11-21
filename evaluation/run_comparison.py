@@ -32,8 +32,16 @@ def run_comparison():
 
     # Save results to CSV
     filename = "results/comparison_results.csv"
-
-    fieldnames = all_results[0].keys()
+    fieldnames = [
+    "seed",
+    "controller",
+    "total_reward",
+    "avg_waiting_time",
+    "avg_total_waiting_time",
+    "avg_vehicle_waiting_time",
+    "avg_stopped",
+    "avg_speed",
+]
 
     with open(filename, "w", newline="") as file:
         writer = csv.DictWriter(file, fieldnames=fieldnames)
