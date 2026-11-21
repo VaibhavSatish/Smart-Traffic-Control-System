@@ -1,9 +1,13 @@
 ## 2. Installing dependencies
 ```bash
 pip install -r requirements.txt
+```
 OR
+```bash
 pip3 install -r requirements.txt
 ```
+
+If install Sumo-rl errors out trying following the steps below first and then doing the above!
 
 ## 3. Installing and Configuring SUMO on macOS
 
