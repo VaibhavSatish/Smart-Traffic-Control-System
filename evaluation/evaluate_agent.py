@@ -5,6 +5,7 @@ import pickle
 import numpy as np
 
 from agent.q_learning import QLearningTrafficAgent, get_state
+from agent.custom_reward import custom_reward
 
 
 def evaluate(sumo_seed=42):
@@ -17,6 +18,7 @@ def evaluate(sumo_seed=42):
         use_gui=False,
         num_seconds=600,
         sumo_seed = sumo_seed, 
+        reward_fn = custom_reward,
     )
 
     # Create the agent

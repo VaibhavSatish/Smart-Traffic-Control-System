@@ -1,6 +1,7 @@
 import gymnasium as gym
 import sumo_rl
 from agent.q_learning import QLearningTrafficAgent, get_state
+from agent.custom_reward import custom_reward
 import os
 import pickle
 import csv
@@ -12,6 +13,7 @@ def train():
         route_file="sumo/routes.rou.xml",
         use_gui=False,
         num_seconds=600,
+        reward_fn = custom_reward,
     )
     agent = QLearningTrafficAgent()
     num_episodes = 50
