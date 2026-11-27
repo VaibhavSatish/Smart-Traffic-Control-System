@@ -1,0 +1,176 @@
+{
+  "initial_info": {
+    "step": 50.0,
+    "system_total_stopped": 6,
+    "system_total_waiting_time": 31.0,
+    "system_mean_waiting_time": 0.96875,
+    "system_mean_speed": 9.38145161184164,
+    "C_stopped": 6,
+    "C_accumulated_waiting_time": 31.0,
+    "C_average_speed": 0.599077796602229,
+    "agents_total_stopped": 6,
+    "agents_total_accumulated_waiting_time": 31.0
+  },
+  "steps": [
+    {
+      "step": 1,
+      "reward": 0.0,
+      "info": {
+        "step": 5.0,
+        "system_total_stopped": 0,
+        "system_total_waiting_time": 0.0,
+        "system_mean_waiting_time": 0.0,
+        "system_mean_speed": 12.191707204823532,
+        "C_stopped": 0,
+        "C_accumulated_waiting_time": 0.0,
+        "C_average_speed": 0.9209071448082844,
+        "agents_total_stopped": 0,
+        "agents_total_accumulated_waiting_time": 0.0
+      }
+    },
+    {
+      "step": 2,
+      "reward": 0.0,
+      "info": {
+        "step": 10.0,
+        "system_total_stopped": 0,
+        "system_total_waiting_time": 0.0,
+        "system_mean_waiting_time": 0.0,
+        "system_mean_speed": 12.470342035345972,
+        "C_stopped": 0,
+        "C_accumulated_waiting_time": 0.0,
+        "C_average_speed": 0.9506055634392306,
+        "agents_total_stopped": 0,
+        "agents_total_accumulated_waiting_time": 0.0
+      }
+    },
+    {
+      "step": 3,
+      "reward": 0.0,
+      "info": {
+        "step": 15.0,
+        "system_total_stopped": 0,
+        "system_total_waiting_time": 0.0,
+        "system_mean_waiting_time": 0.0,
+        "system_mean_speed": 12.386077887400313,
+        "C_stopped": 0,
+        "C_accumulated_waiting_time": 0.0,
+        "C_average_speed": 0.9402222000751302,
+        "agents_total_stopped": 0,
+        "agents_total_accumulated_waiting_time": 0.0
+      }
+    },
+    {
+      "step": 4,
+      "reward": 0.0,
+      "info": {
+        "step": 20.0,
+        "system_total_stopped": 0,
+        "system_total_waiting_time": 0.0,
+        "system_mean_waiting_time": 0.0,
+        "system_mean_speed": 11.780863311083762,
+        "C_stopped": 0,
+        "C_accumulated_waiting_time": 0.0,
+        "C_average_speed": 0.9271178761612897,
+        "agents_total_stopped": 0,
+        "agents_total_accumulated_waiting_time": 0.0
+      }
+    },
+    {
+      "step": 5,
+      "reward": -0.03,
+      "info": {
+        "step": 25.0,
+        "system_total_stopped": 1,
+        "system_total_waiting_time": 3.0,
+        "system_mean_waiting_time": 0.15,
+        "system_mean_speed": 10.855494774129141,
+        "C_stopped": 1,
+        "C_accumulated_waiting_time": 3.0,
+        "C_average_speed": 0.7859908028939456,
+        "agents_total_stopped": 1,
+        "agents_total_accumulated_waiting_time": 3.0
+      }
+    },
+    {
+      "step": 6,
+      "reward": -0.13,
+      "info": {
+        "step": 30.0,
+        "system_total_stopped": 4,
+        "system_total_waiting_time": 16.0,
+        "system_mean_waiting_time": 0.6666666666666666,
+        "system_mean_speed": 9.596799003722118,
+        "C_stopped": 4,
+        "C_accumulated_waiting_time": 16.0,
+        "C_average_speed": 0.6262991049059788,
+        "agents_total_stopped": 4,
+        "agents_total_accumulated_waiting_time": 16.0
+      }
+    },
+    {
+      "step": 7,
+      "reward": 0.010000000000000009,
+      "info": {
+        "step": 35.0,
+        "system_total_stopped": 1,
+        "system_total_waiting_time": 1.0,
+        "system_mean_waiting_time": 0.038461538461538464,
+        "system_mean_speed": 8.576604527472838,
+        "C_stopped": 1,
+        "C_accumulated_waiting_time": 15.0,
+        "C_average_speed": 0.5734758620607944,
+        "agents_total_stopped": 1,
+        "agents_total_accumulated_waiting_time": 15.0
+      }
+    },
+    {
+      "step": 8,
+      "reward": 0.009999999999999981,
+      "info": {
+        "step": 40.0,
+        "system_total_stopped": 4,
+        "system_total_waiting_time": 14.0,
+        "system_mean_waiting_time": 0.5384615384615384,
+        "system_mean_speed": 9.05035041575157,
+        "C_stopped": 4,
+        "C_accumulated_waiting_time": 14.0,
+        "C_average_speed": 0.5938910256905974,
+        "agents_total_stopped": 4,
+        "agents_total_accumulated_waiting_time": 14.0
+      }
+    },
+    {
+      "step": 9,
+      "reward": -0.03999999999999998,
+      "info": {
+        "step": 45.0,
+        "system_total_stopped": 2,
+        "system_total_waiting_time": 5.0,
+        "system_mean_waiting_time": 0.17857142857142858,
+        "system_mean_speed": 7.814054674326052,
+        "C_stopped": 2,
+        "C_accumulated_waiting_time": 18.0,
+        "C_average_speed": 0.49977457979228446,
+        "agents_total_stopped": 2,
+        "agents_total_accumulated_waiting_time": 18.0
+      }
+    },
+    {
+      "step": 10,
+      "reward": -0.13,
+      "info": {
+        "step": 50.0,
+        "system_total_stopped": 6,
+        "system_total_waiting_time": 31.0,
+        "system_mean_waiting_time": 0.96875,
+        "system_mean_speed": 9.38145161184164,
+        "C_stopped": 6,
+        "C_accumulated_waiting_time": 31.0,
+        "C_average_speed": 0.599077796602229,
+        "agents_total_stopped": 6,
+        "agents_total_accumulated_waiting_time": 31.0
+      }
+    }
+  ]
+}
