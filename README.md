@@ -1,15 +1,16 @@
 # Smart Traffic Control System
 
 ## 1. Project Overview
-This project aims to develop an intelligent traffic signal control system that adapts to real-time traffic conditions at a busy four-way intersection. Rather than relying on fixed signal schedules,[...]
 
-The primary objective is to improve traffic flow by maximizing vehicle throughput while minimizing average vehicle waiting time and overall congestion. The system will learn to make traffic signal [...]
+This project develops an intelligent traffic-signal controller for a busy four-way intersection using SUMO-RL and a custom Q-learning agent. It replaces fixed signal schedules with an agent that observes the traffic environment and dynamically decides whether to continue the current green phase or switch to the opposing green phase.
 
-To evaluate its effectiveness, the intelligent controller will be compared against a traditional fixed-time traffic signal system, which operates on a predetermined schedule regardless of current t[...]
+The primary objective is to improve traffic flow by maximizing vehicle throughput while minimizing average vehicle waiting time and overall congestion. The agent learns from vehicle queues and its current traffic-light phase, using the custom reward function to balance these competing goals.
 
-The project will also explore how different reward structures influence the controller's learning and decision-making. By examining the effects of different approaches to rewarding efficient traff[...]
+The intelligent controller is evaluated against a traditional fixed-time traffic-signal system that alternates phases on a predetermined schedule regardless of current traffic conditions.
 
-Performance will be evaluated using metrics such as average vehicle waiting time, traffic throughput, congestion levels, and learning progress over time. Results will be presented through visualiz[...]
+The project explores how different reward structures influence the controller's learning and decision-making. The custom reward penalizes accumulated waiting time and queued vehicles, rewards newly passing vehicles in the outgoing lanes, and discourages unnecessary signal switches.
+
+Performance is evaluated using average vehicle waiting time, traffic throughput, congestion levels, and learning progress across episodes. The repository provides CSV exports and plots that compare the trained Q-learning agent with the fixed-time baseline.
 
 ### Technologies
 
